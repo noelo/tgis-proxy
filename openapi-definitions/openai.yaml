@@ -5096,7 +5096,7 @@ components:
             The prompt(s) to generate completions for, encoded as a string, array of strings, array of tokens, or array of token arrays.
 
             Note that <|endoftext|> is the document separator that the model sees during training, so if a prompt is not specified the model will generate as if from the beginning of a new document.
-          default: "<|endoftext|>"
+          #default: "<|endoftext|>"
           nullable: true
           oneOf:
             - type: string
@@ -5151,7 +5151,7 @@ components:
         logit_bias: &completions_logit_bias
           type: object
           x-oaiTypeLabel: map
-          default: null
+          #default: null
           nullable: true
           additionalProperties:
             type: integer
@@ -5218,7 +5218,7 @@ components:
           nullable: true
           oneOf:
             - type: string
-              default: <|endoftext|>
+              #default: "<|endoftext|>"
               example: "\n"
               nullable: true
             - type: array
@@ -5825,7 +5825,7 @@ components:
         logit_bias:
           type: object
           x-oaiTypeLabel: map
-          default: null
+          #default: null
           nullable: true
           additionalProperties:
             type: integer
@@ -6243,7 +6243,7 @@ components:
             - type: string
               enum: ["dall-e-2", "dall-e-3"]
           x-oaiTypeLabel: string
-          default: "dall-e-2"
+          #default: "dall-e-2"
           example: "dall-e-3"
           nullable: true
           description: The model to use for image generation.
@@ -6340,7 +6340,7 @@ components:
             - type: string
               enum: ["dall-e-2"]
           x-oaiTypeLabel: string
-          default: "dall-e-2"
+          #default: "dall-e-2"
           example: "dall-e-2"
           nullable: true
           description: The model to use for image generation. Only `dall-e-2` is supported at this time.
@@ -6378,7 +6378,7 @@ components:
             - type: string
               enum: ["dall-e-2"]
           x-oaiTypeLabel: string
-          default: "dall-e-2"
+          #default: "dall-e-2"
           example: "dall-e-2"
           nullable: true
           description: The model to use for image generation. Only `dall-e-2` is supported at this time.
@@ -6411,10 +6411,11 @@ components:
           nullable: false
           default: "text-moderation-latest"
           example: "text-moderation-stable"
-          anyOf:
-            - type: string
-            - type: string
-              enum: ["text-moderation-latest", "text-moderation-stable"]
+          type: string
+          # anyOf:
+          #   - type: string
+          #   - type: string
+          #     enum: ["text-moderation-latest", "text-moderation-stable"]
           x-oaiTypeLabel: string
       required:
         - input
@@ -6635,7 +6636,7 @@ components:
                 - type: integer
                   minimum: 1
                   maximum: 256
-              default: auto
+              #default: auto
             learning_rate_multiplier:
               description: |
                 Scaling factor for the learning rate. A smaller learning rate may be useful to avoid
@@ -6646,7 +6647,7 @@ components:
                 - type: number
                   minimum: 0
                   exclusiveMinimum: true
-              default: auto
+              #default: auto
             n_epochs:
               description: |
                 The number of epochs to train the model for. An epoch refers to one full cycle
@@ -6657,7 +6658,7 @@ components:
                 - type: integer
                   minimum: 1
                   maximum: 50
-              default: auto
+              #default: auto
         suffix:
           description: |
             A string of up to 18 characters that will be added to your fine-tuned model name.
@@ -7120,7 +7121,7 @@ components:
                 - type: integer
                   minimum: 1
                   maximum: 50
-              default: auto
+              #default: auto
               description:
                 The number of epochs to train the model for. An epoch refers to one full cycle through the training dataset.
 
