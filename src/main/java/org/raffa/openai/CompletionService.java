@@ -13,6 +13,7 @@ import fmaas.Generation.BatchedGenerationRequest;
 import fmaas.Generation.BatchedGenerationResponse;
 import fmaas.Generation.GenerationRequest;
 import fmaas.Generation.GenerationResponse;
+import fmaas.Generation.StopReason;
 import io.quarkus.grpc.GrpcClient;
 import io.smallrye.mutiny.Uni;
 
@@ -39,7 +40,23 @@ public class CompletionService implements CompletionsApi {
   private CreateCompletionResponseChoicesInner fromGenerationResponseToCompletionResponseChoice(GenerationResponse generationResponse){
     CreateCompletionResponseChoicesInner createCompletionResponseChoicesInner=new CreateCompletionResponseChoicesInner();
     createCompletionResponseChoicesInner.setText(generationResponse.getText());
+    createCompletionResponseChoicesInner.setFinishReason(fromStopReasonToFinishReason(generationResponse.getStopReason()));
     return createCompletionResponseChoicesInner;
+  }
+
+  private CreateCompletionResponseChoicesInner.FinishReasonEnum fromStopReasonToFinishReason(StopReason stopReason) {
+    switch (stopReason){
+      case CANCELLED: return CreateCompletionResponseChoicesInner.FinishReasonEnum.STOP;
+      case EOS_TOKEN: return CreateCompletionResponseChoicesInner.FinishReasonEnum.STOP;
+      case ERROR: return CreateCompletionResponseChoicesInner.FinishReasonEnum.CONTENT_FILTER;
+      case MAX_TOKENS: return CreateCompletionResponseChoicesInner.FinishReasonEnum.LENGTH;
+      case NOT_FINISHED: return CreateCompletionResponseChoicesInner.FinishReasonEnum.STOP;
+      case STOP_SEQUENCE: return CreateCompletionResponseChoicesInner.FinishReasonEnum.STOP;
+      case TIME_LIMIT: return CreateCompletionResponseChoicesInner.FinishReasonEnum.STOP;
+      case TOKEN_LIMIT: return CreateCompletionResponseChoicesInner.FinishReasonEnum.LENGTH;
+      case UNRECOGNIZED: return CreateCompletionResponseChoicesInner.FinishReasonEnum.CONTENT_FILTER;
+      default: return CreateCompletionResponseChoicesInner.FinishReasonEnum.STOP;
+    }
   }
   
 }
